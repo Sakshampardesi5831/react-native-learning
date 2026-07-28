@@ -58,6 +58,7 @@ export const getPokemonList = async (
   );
 
   if (!response.ok) {
+    console.log("failed to fetch!!!");
     throw new Error("failed to fetch pokemon list");
   }
   return response.json();
@@ -73,9 +74,7 @@ export const getPokemonDetail = async (
   return response.json();
 };
 
-export const getPokemonByType = async (
-  type: string,
-): Promise<PokemonRef[]> => {
+export const getPokemonByType = async (type: string): Promise<PokemonRef[]> => {
   const response = await fetch(`${BASE_URL}/type/${type}`);
   if (!response.ok) {
     throw new Error(`failed to fetch type ${type}`);

@@ -34,17 +34,21 @@ const HomeScreen = () => {
   }, [selectedType]);
 
   const fetchData = async () => {
+    console.log("Fetching Pokémon list started...", { selectedType });
     setLoading(true);
     setPage(1);
     try {
       if (selectedType) {
         const list = await getPokemonByType(selectedType);
+        console.log(`Fetched ${list.length} Pokémon by type: ${selectedType}`);
+        setMasterList(list);
       } else {
         const data = await getPokemonList(1000, 0);
+        console.log(`Fetched ${data.results.length} total Pokémon`);
         setMasterList(data.results);
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching Pokémon data:", error);
     } finally {
       setLoading(false);
     }
@@ -53,7 +57,7 @@ const HomeScreen = () => {
   const filteredList = useMemo(() => {
     if (!searchText) return masterList;
     return masterList.filter((p) => p.name.includes(searchText.toLowerCase()));
-  }, []);
+  }, [masterList, searchText]);
   const displayList = useMemo(() => {
     return filteredList.slice(0, page * PAGE_SIZE);
   }, [filteredList, page]);
@@ -87,8 +91,8 @@ const HomeScreen = () => {
             onSelectType={setSelectedType}
           />
           {loading && page === 1 ? (
-            <View>
-              <ActivityIndicator size={"large"} color={COLORS.fairy} />
+            <View style={styles.center}>
+              <ActivityIndicator size={"large"} color={COLORS.primary} />
             </View>
           ) : (
             <FlatList
@@ -128,10 +132,12 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   filterContainer: {
+    flex: 1,
     marginHorizontal: -16,
     marginBottom: 16,
   },
   listContent: {
+    paddingHorizontal: 16,
     paddingBottom: 24,
   },
   center: {

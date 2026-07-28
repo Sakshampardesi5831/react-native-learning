@@ -11,7 +11,12 @@ export type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   "HomeScreen"
 >;
+export type PokemonListScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "PokemonListScreen"
+>;
 export type PokemonDetailScreenRouteProp = RouteProp<
   RootStackParamList,
   "PokemonDetailScreen"
 >;
+

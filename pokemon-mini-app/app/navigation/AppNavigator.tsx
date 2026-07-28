@@ -28,7 +28,12 @@ const HomeStackDisplay = () => {
 
 const ListStackDisplay = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        contentStyle: { backgroundColor: "#18181b" },
+      }}
+    >
       <Stack.Screen name="PokemonListScreen" component={PokemonListScreen} />
       <Stack.Screen
         name="PokemonDetailScreen"
